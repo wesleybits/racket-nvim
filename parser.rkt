@@ -189,13 +189,13 @@
    [data (bytestring size)]))
 
 (define-binary-class ext-16% msgpack% 
-  ([size (integer-be 1)]
-   [type (integer-be 2)]
+  ([size (integer-be 2)]
+   [type (integer-be 1)]
    [data (bytestring size)]))
 
 (define-binary-class ext-32% msgpack% 
-  ([size (integer-be 1)]
-   [type (integer-be 4)]
+  ([size (integer-be 4)]
+   [type (integer-be 1)]
    [data (bytestring size)]))
 
 (define ((is-any-of? . classes) obj)
