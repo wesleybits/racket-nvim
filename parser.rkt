@@ -60,10 +60,10 @@
 (define-binary-class true% msgpack% ([val #true]))
 
 (define-binary-class positive-fixint% msgpack%
-  ([val (unsigned->signed tag 1)]))
+  ([val tag]))
 
 (define-binary-class negative-fixint% msgpack%
-  ([val tag]))
+  ([val (unsigned->signed tag 1)]))
 
 (define-binary-class uint-8% msgpack%
   ([val (integer-be 1)]))
