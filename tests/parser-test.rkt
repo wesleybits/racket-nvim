@@ -1,7 +1,7 @@
 #lang racket
 
 (require rackunit
-         "parser.rkt")
+         "../parser.rkt")
 
 ;; {"compact": true, "schema":0}
 (define example
@@ -24,9 +24,9 @@
     (λ () (read-msgpack))))
 
 (check-pred packable? example-output
-            "Output is packable")
+            "Read structure is packable")
 (check-equal? example example-output
-              "Output very closely matches input")
+              "Serialized structure very closely matches the original binary")
 (check-equal? example-result example-re-read
-              "Reading own input produces the same structure")
+              "Reading own generated binary produces the same structure")
 
