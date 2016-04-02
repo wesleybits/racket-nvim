@@ -1,7 +1,14 @@
 #lang racket
 
 (require binary-class
-         racket/class)
+         racket/class
+         racket/splicing)
+
+(splicing-let ([std-out (current-output-port)])
+  (define (trace x)
+    (display "Value:" std-out)
+    (displayln x std-out)
+    x))
 
 (define ((between? x y) n)
   (<= x n y))
@@ -132,7 +139,7 @@
   ([val double-be]))
 
 (define-binary-class fixstring% msgpack%
-  ([val (bytestring (bitwise-and tag #b1111))]))
+  ([val (bytestring (bitwise-and tag #b11111))]))
 
 (define-binary-class str-8% msgpack%
   ([size (integer-be 1)]
@@ -154,7 +161,8 @@
   (binary (λ (in)
             (let loupe ([s size])
               (if (= s 0) '()
-                (read-value msgpack% in))))
+                (cons (read-value msgpack% in)
+                      (loupe (- s 1))))))
           (λ (out vals)
             (for ([v vals])
               (write-value msgpack% out v)))))
